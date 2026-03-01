@@ -11,6 +11,9 @@ obj/
 desktop.ini
 Thumbs.db
 
+# Installer output
+installer/Output/
+
 # Logs / temp
 *.log
 *.tmp

@@ -1,30 +1,8 @@
 using System.Runtime.InteropServices;
 using FeColorizer;
 
-if (args.Length == 0)
+switch (args.Length > 0 ? args[0].ToLowerInvariant() : "")
 {
-    int result = NativeMsgBox.Show(
-        "FeColorizer is not yet registered as a context menu item.\n\n" +
-        "Click Yes to register it (requires Administrator privileges).",
-        "FeColorizer \u2014 Setup",
-        NativeMsgBox.MB_YESNO | NativeMsgBox.MB_ICONQUESTION);
-
-    if (result == NativeMsgBox.IDYES)
-        Install();
-
-    return;
-}
-
-switch (args[0].ToLowerInvariant())
-{
-    case "--install":
-        Install();
-        break;
-
-    case "--uninstall":
-        Uninstall();
-        break;
-
     case "--colorize":
     {
         string path = SanitizePath(args.Length >= 2 ? args[1] : "");
@@ -51,39 +29,22 @@ switch (args[0].ToLowerInvariant())
         break;
     }
 
+    case "--generate-icons":
+        // Called silently by the installer to pre-populate %AppData%\FeColorizer\icons\
+        IconGenerator.GenerateAll();
+        break;
+
     default:
-        NativeMsgBox.Show($"Unknown argument: {args[0]}", "FeColorizer",
-            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONWARNING);
+        NativeMsgBox.Show(
+            "FeColorizer is installed and running.\n\n" +
+            "Right-click any folder or drive in Explorer to use it.\n\n" +
+            "To uninstall, go to Windows Settings \u2192 Apps \u2192 FeColorizer.",
+            "FeColorizer",
+            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONINFO);
         break;
 }
 
 // -------------------------------------------------------------------------
-
-static void Install()
-{
-    try
-    {
-        string exePath = Environment.ProcessPath
-            ?? Path.Combine(AppContext.BaseDirectory, "FeColorizer.exe");
-
-        IconGenerator.GenerateAll();
-        RegistryHelper.Install(exePath);
-
-        NativeMsgBox.Show(
-            "FeColorizer has been registered.\n\n" +
-            "Right-click any folder or drive in Explorer to see the menu.",
-            "FeColorizer \u2014 Installed",
-            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONINFO);
-    }
-    catch (Exception ex)
-    {
-        NativeMsgBox.Show(
-            $"Installation failed:\n{ex.Message}\n\n" +
-            "Make sure you are running as Administrator.",
-            "FeColorizer \u2014 Error",
-            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONERROR);
-    }
-}
 
 /// <summary>
 /// Fixes the trailing-backslash quoting bug in Windows shell commands.
@@ -92,33 +53,12 @@ static void Install()
 /// </summary>
 static string SanitizePath(string raw)
 {
-    // Strip any stray surrounding or trailing quotes introduced by the parser
     string path = raw.Trim().Trim('"').TrimEnd('\\').TrimEnd('"');
 
-    // Restore trailing backslash for drive roots (e.g. "D:" → "D:\")
     if (path.Length == 2 && char.IsLetter(path[0]) && path[1] == ':')
         path += Path.DirectorySeparatorChar;
 
     return path;
-}
-
-static void Uninstall()
-{
-    try
-    {
-        RegistryHelper.Uninstall();
-        NativeMsgBox.Show(
-            "FeColorizer has been removed from the context menu.",
-            "FeColorizer \u2014 Uninstalled",
-            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONINFO);
-    }
-    catch (Exception ex)
-    {
-        NativeMsgBox.Show(
-            $"Uninstall failed:\n{ex.Message}",
-            "FeColorizer \u2014 Error",
-            NativeMsgBox.MB_OK | NativeMsgBox.MB_ICONERROR);
-    }
 }
 
 // -------------------------------------------------------------------------
