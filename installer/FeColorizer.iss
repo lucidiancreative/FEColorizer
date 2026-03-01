@@ -18,6 +18,7 @@ UninstallDisplayName={#AppName}
 Compression=lzma2
 SolidCompression=yes
 PrivilegesRequired=admin
+UsedUserAreasWarning=no
 ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
@@ -47,9 +48,7 @@ Root: HKCR; Subkey: "Drive\shell\FeColorizer_Revert\command";     ValueType: str
 
 [Run]
 ; Pre-generate all 26 color icons into %AppData%\FeColorizer\icons\ after install
-Filename: "{app}\FeColorizer.exe"; Parameters: "--generate-icons"; \
-    Flags: runhidden waitproguntilterminated; \
-    StatusMsg: "Generating folder icons..."
+Filename: "{app}\FeColorizer.exe"; Parameters: "--generate-icons"; Flags: runhidden waituntilterminated; StatusMsg: "Generating folder icons..."
 
 [UninstallDelete]
 ; Remove the icon cache created in %AppData%\FeColorizer\
