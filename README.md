@@ -6,6 +6,14 @@ FeColorizer is a lightweight Windows utility that automatically applies color-co
 
 ---
 
+## Before Colorizer:
+
+![alt text](image.png)
+
+## After Colorizer: 
+
+![alt text](image-1.png)
+
 ## Features
 
 - **Automatic Color Mapping**: Each folder gets a unique color based on its first letter (A=Aqua, B=Blue, C=Cyan, etc.)
