@@ -25,7 +25,8 @@ ArchitecturesInstallIn64BitMode=x64compatible
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: {#AppExe}; DestDir: "{app}"; Flags: ignoreversion
+Source: {#AppExe};                        DestDir: "{app}"; Flags: ignoreversion
+Source: "..\ResetThumbnailCache.bat";      DestDir: "{app}"; Flags: ignoreversion
 
 [Registry]
 ; --- Directory (folder) context menu ---
