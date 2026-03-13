@@ -140,9 +140,9 @@ A: Yes, but OneDrive/Dropbox may sync the `desktop.ini` files to other devices w
 ## Building from Source
 
 ```bash
-git clone https://github.com/yourusername/fecolorizer.git
-cd fecolorizer
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+git clone https://github.com/lucidiancreative/FEcolorizer.git
+cd FEcolorizer
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:DebugType=none -p:DebugSymbols=false
 ```
 
 Then compile `installer/FeColorizer.iss` with Inno Setup to produce `FeColorizer-Setup.exe`.

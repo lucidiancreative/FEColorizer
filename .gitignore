@@ -17,3 +17,9 @@ installer/Output/
 # Logs / temp
 *.log
 *.tmp
+
+# Claude conversation exports
+*-convo-*.md
+
+# Internal / non-public docs
+MARKETING.md
