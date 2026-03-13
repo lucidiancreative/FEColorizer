@@ -49,6 +49,8 @@ FeColorizer is a lightweight Windows utility that automatically applies color-co
 3. Select **Colorize subfolders**
 4. All immediate subfolders are automatically color-coded
 
+![alt text](image-2.png)
+
 ### Remove Colors
 1. Right-click the parent folder or drive root
 2. Select **Remove folder colors**
